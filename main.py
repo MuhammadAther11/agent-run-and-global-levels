@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 
 load_dotenv()
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 agent = genai.GenerativeModel('gemini-1.5-flash')
 
@@ -14,16 +14,16 @@ prompt = input('Enter your prompt : ')
 async def agent_run():
     print("\n[Agent Level] run()")
     response = await agent.generate_content_async(prompt)
-    print("response.text ")
+    print(response.text )
 
 def agent_run_sync():
     print("\n[Agent Level] run_sync()")
     response = agent.generate_content(prompt)
-    print("response.text")
+    print(response.text)
 
 async def agent_stream():
     print("\n[Agent Level] stream()")
-    response =await agent.generate_content_async(prompt , stream=True)
+    stream =await agent.generate_content_async(prompt , stream=True)
     async for chunk in stream:
         print(chunk.text, end="")
     print()
@@ -33,19 +33,19 @@ async def run_level_run():
     print("\n[Run Level] run()")
     model = genai.GenerativeModel('gemini-1.5-flash')
     response = await model.generate_content_async(prompt)
-    print("response.text")
+    print(response.text)
 
 def run_level_run_sync():
     print("\n[Run Level] run_sync()")
     model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(prompt)
-    print("response.text")
+    print(response.text)
 
 
 async def run_level_stream():
     print("\n[Run Level] stream()")
     model = genai.GenerativeModel('gemini-1.5-flash')
-    response =await model.generate_content_async(prompt , stream=True)
+    stream =await model.generate_content_async(prompt , stream=True)
     async for chunk in stream:
         print(chunk.text, end="")
     print()
@@ -56,12 +56,12 @@ async def run_level_stream():
 async def global_run():
     print("\n[Global Level] run()")
     response = await genai.GenerativeModel('gemini-1.5-flash').generate_content_async(prompt)
-    print("response.text")
+    print(response.text)
 
 def global_run_sync():
     print("\n[Global Level] run_sync()")
     response = genai.GenerativeModel('gemini-1.5-flash').generate_content(prompt)
-    print("response.text")
+    print(response.text)
 
 async def global_stream():
     print("\n[Global Level] stream()")
